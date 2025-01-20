@@ -296,6 +296,7 @@
 
 
       <div class="row">
+        @if(!empty($nominees))
         @forelse($nominees as $nominee)
         <div class="col-12 col-md-6 col-lg-4">
           <div class="card">
@@ -338,6 +339,7 @@
           <p>No Nominees found</p>
         </div>
         @endforelse
+        @endif
       </div>
     </div>
   </div>
@@ -352,9 +354,9 @@
       <div class="modal-content">
         <div class="modal-header container-fluid">
 
-          <div class="circle-container">
+          {{-- <div class="circle-container">
             <img src="{{ asset('storage/' .$nominee->logo)}}" alt="image" class="circle">
-          </div>
+          </div> --}}
           <div>
             <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
           </div>

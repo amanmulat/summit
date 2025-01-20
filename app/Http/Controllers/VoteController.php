@@ -23,7 +23,7 @@ class VoteController extends Controller
 
         $nominees = Nominee::when($request->input('category'), function ($query) use ($request) {
             return $query->where('category_id', $request->category);
-        })->when($request->input('award_type'), function ($query) use ($request) {
+        })->when($request->input('awardType'), function ($query) use ($request) {
             return $query->where('award_type_id', $request->awardType);
         })->when($request->input('technology'), function ($query) use ($request) {
             return $query->where('technology_id', $request->technology);

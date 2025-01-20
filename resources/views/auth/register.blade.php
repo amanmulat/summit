@@ -49,7 +49,7 @@
             </x-primary-button>
         </div>
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-black-500 hover:text-black-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-500"
+            <a class="underline text-sm text-black-500 hover:text-black-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 200; font-size: 16px;" href=" /">
                 {{ __('Already registered?') }}
             </a>

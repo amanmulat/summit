@@ -60,13 +60,13 @@ class NomineeResource extends Resource
                 Tables\Columns\TextColumn::make('description')->label('Description')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('technology_id')->label('Technology')
+                Tables\Columns\TextColumn::make('technology.name')->label('Technology')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('category_id')->label('Category')
+                Tables\Columns\TextColumn::make('category.name')->label('Category')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('award_type_id')->label('Award Type')
+                Tables\Columns\TextColumn::make('awardType.name')->label('Award Type')
                     ->searchable()
                     ->sortable(),
 
@@ -76,6 +76,7 @@ class NomineeResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

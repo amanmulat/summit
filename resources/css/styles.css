@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .btn {
     width: 100%;
     padding: 10px 13px;
@@ -11,7 +7,6 @@
     font-weight: bold;
     text-transform: uppercase;
     transition: background 0.3s ease-in-out;
-    margin: auto;
 }
 
 .btn:hover {
@@ -25,9 +20,4 @@
 
 .btn:active {
     background: linear-gradient(360deg, #2f8b00 -21.86%, #358165 130.06%);
-}
-
-.label {
-    font-family: "Plus Jakarta Sans", sans-serif;
-    margin-bottom: 5px;
 }

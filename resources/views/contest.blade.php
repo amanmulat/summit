@@ -16,11 +16,16 @@
     rel="stylesheet">
   <title>Contest</title>
   <style>
+    .header {
+      border-bottom: 2px solid #EDECEC;
+      background-color: white;
+      padding: 20px;
+    }
+
     .head {
-      display: flex;
       margin-bottom: 20px;
       border-bottom: 2px solid #EDECEC;
-      font-family: Plus Jakarta Sans;
+      font-family: "Plus Jakarta Sans", serif;
       font-size: 40px;
       font-weight: 700;
       line-height: 66.24px;
@@ -30,6 +35,16 @@
       display: flex;
       align-items: center;
     }
+
+    .container {
+      padding-top: 30px;
+      display: flex;
+      justify-content: center;
+
+
+    }
+
+
 
     .logo {
       margin-right: 20px;
@@ -41,12 +56,12 @@
       font-weight: 700;
       line-height: 43.2px;
       text-align: left;
-      text-underline-position: from-font;
-      text-decoration-skip-ink: none;
+
+
     }
 
     p {
-      font-family: Plus Jakarta Sans;
+      font-family: "Plus Jakarta Sans", serif;
       font-size: 16px;
       font-weight: 400;
       line-height: 24px;
@@ -62,12 +77,21 @@
       float: right;
     }
 
+    .main {
+      padding: 15px;
+      overflow-y: auto;
+      margin-left: 30px;
+    }
+
+    .sidebar {
+      margin-top: 30px;
+    }
+
 
 
     .card {
-      width: 100%;
-      border-radius: 8px;
 
+      border-radius: 8px;
       border: 2px solid#EDECEC;
       padding: 13px 14px;
       margin-bottom: 20px;
@@ -84,7 +108,7 @@
       border-radius: 8px;
       background: #f8f9fa;
       border: 2px solid#EDECEC;
-      padding: 13px 14px;
+      padding: 10px;
       float: right;
 
 
@@ -122,18 +146,40 @@
       border: 1px solid #ccc;
       margin-top: 10px;
     }
+
+    .circle-container {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-image: url('/assets/images/Star.svg');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
   </style>
 </head>
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg navbar-light header">
       <div class="container-fluid justify-content-between">
         <!-- Left elements -->
         <div class="d-flex">
           <!-- Brand -->
           <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="#">
-            <img src="{{asset('assets/images/logo.png')}}" width="210px" alt="MDB Logo" loading="lazy"
+            <img src="{{asset('assets/images/lg.svg')}}" width="210px" alt="MDB Logo" loading="lazy"
               style="margin-top: 2px;" />
           </a>
 
@@ -144,37 +190,31 @@
 
         <!-- Center elements -->
         <ul class="navbar-nav flex-row d-none d-md-flex">
-          <li class="nav-item me-3 me-lg-1 active">
-            <a class="nav-link" href="#">
+          <li class="nav-item me-3 me-lg-1">
+            <a class="nav-link d-sm-flex align-items-sm-center" href="#">
               <span><i class="fa-regular fa-calendar"></i></span>
-
+              <strong class="d-none d-sm-block ms-1">01 Jan 2025</strong>
             </a>
           </li>
 
           <li class="nav-item me-3 me-lg-1">
-            <a class="nav-link" href="#">
-              <span><i class="fas fa-flag fa-lg"></i></span>
+            <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+              <span><i class="fa-solid fa-location-dot"></i></span>
+              <strong class="d-none d-sm-block ms-1">Skylight Hotel, Addis Ababa</strong>
+            </a>
+          </li>
+          <li class="nav-item me-3 me-lg-1">
+            <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+              <span><i class="fa-brands fa-instagram"></i></span>
+            </a>
+          </li>
+          <li class="nav-item me-3 me-lg-1">
+            <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+              <span><i class="fa-brands fa-facebook-f"></i></span>
             </a>
           </li>
 
-          <li class="nav-item me-3 me-lg-1">
-            <a class="nav-link" href="#">
-              <span><i class="fas fa-video fa-lg"></i></span>
-            </a>
-          </li>
 
-          <li class="nav-item me-3 me-lg-1">
-            <a class="nav-link" href="#">
-              <span><i class="fas fa-shopping-bag fa-lg"></i></span>
-            </a>
-          </li>
-
-          <li class="nav-item me-3 me-lg-1">
-            <a class="nav-link" href="#">
-              <span><i class="fas fa-users fa-lg"></i></span>
-              <span class="badge rounded-pill badge-notification bg-danger">2</span>
-            </a>
-          </li>
         </ul>
         <!-- Center elements -->
 
@@ -182,167 +222,155 @@
         <ul class="navbar-nav flex-row">
           <li class="nav-item me-3 me-lg-1">
             <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-              <img src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp" class="rounded-circle" height="22"
-                alt="Black and White Portrait of a Man" loading="lazy" />
-              <strong class="d-none d-sm-block ms-1">John</strong>
+              <button type="submit" class="btn btn-succes">Reserve Your Spot</button>
             </a>
           </li>
           <li class="nav-item me-3 me-lg-1">
-            <a class="nav-link" href="#">
-              <span><i class="fas fa-plus-circle fa-lg"></i></span>
-            </a>
-          </li>
-          <li class="nav-item dropdown me-3 me-lg-1">
-            <a data-mdb-dropdown-init class="nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
-              role="button" aria-expanded="false">
-              <i class="fas fa-comments fa-lg"></i>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
 
-              <span class="badge rounded-pill badge-notification bg-danger">6</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-              <li>
-                <a class="dropdown-item" href="#">Some news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
+              <x-primary-button :href="route('logout')" onclick="event.preventDefault();
+                                                            this.closest('form').submit();" style="margin-top: 8px">
+                {{ __('Log Out') }}
+                </x-dropdown-link>
+            </form>
           </li>
-          <li class="nav-item dropdown me-3 me-lg-1">
-            <a data-mdb-dropdown-init class="nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
-              role="button" aria-expanded="false">
-              <i class="fas fa-bell fa-lg"></i>
-              <span class="badge rounded-pill badge-notification bg-danger">12</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-              <li>
-                <a class="dropdown-item" href="#">Some news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown me-3 me-lg-1">
-            <a data-mdb-dropdown-init class="nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
-              role="button" aria-expanded="false">
-              <i class="fas fa-chevron-circle-down fa-lg"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-              <li>
-                <a class="dropdown-item" href="#">Some news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <!-- Right elements -->
+
+          <!-- Right elements -->
       </div>
     </nav>
   </header>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-4 col-lg-2">
-        <h2>Choose the Categories</h2>
 
+  <div class="container-fluid flex-grow-1 d-flex">
+    <div class="col-md-4 col-sm-8 col-lg-3 sidebar">
+      <h2>Choose the Categories</h2>
+      <form action="{{ route('dashboard') }}" method="GET">
         <div>
-          <select class="custom-select">
-            <option value="" disabled selected>Select by Category</option>
+
+          <select class="custom-select" name="category" id="category" onchange="this.form.submit()">
+            <option value="">Select by Category</option>
             @foreach($categories as $category)
-            <option value="">{{$category->name}}</option>
+            <option value="{{ $category->id }}" {{ request('category')==$category->id ? 'selected' : ''
+              }}>{{$category->name}}</option>
             @endforeach
           </select>
         </div>
         <div>
-          <select class="custom-select">
-            <option value="" disabled selected>By Technology</option>
+          <select class="custom-select" name="technology" id="technology" onchange="this.form.submit()">
+            <option value="">Select by Technology</option>
             @foreach($technologies as $technology)
-            <option value="">{{$technology->name}}</option>
+            <option value="{{ $technology->id }}" {{ request('technology')==$technology->id ? 'selected' : ''
+              }}>{{$technology->name}}</option>
             @endforeach
           </select>
         </div>
         <div>
-          <select class="custom-select">
-            <option value="" disabled selected>By Award Type</option>
+          <select class="custom-select" name="awardType" id="awardType" onchange="this.form.submit()">
+            <option value="">Select by Award Type</option>
             @foreach($awardTypes as $awardType)
-            <option value="{{$awardType->id}}">{{$awardType->name}}</option>
-
+            <option value="{{ $awardType->id }}" {{ request('award_type')==$awardType->id ? 'selected' : ''
+              }}>{{$awardType->name}}</option>
             @endforeach
           </select>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="col-md-8 col-sm-4 col-lg-9 main">
+      <div class="row">
+        <div class="col-12 head">
+          <div class="logo">
+            <img src="{{ asset('assets/images/award.png') }}" alt="image">
+          </div>
+          <h1>Legacy Builders Award</h1>
         </div>
       </div>
+      @if (session('success'))
+      <p style="color: green;">{{ session('success') }}</p>
+      @endif
 
-      <div class="col-12 col-md-8 col-lg-10">
-        <div class="row">
-          <div class="col-12 head">
-            <div class="logo">
-              <img src="{{ asset('assets/images/award.png') }}" alt="image">
+      @if (session('error'))
+      <p style="color: red;">{{ session('error') }}</p>
+      @endif
+
+
+      <div class="row">
+        @forelse($nominees as $nominee)
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card">
+            <img src="{{ asset('storage/' .$nominee->logo) }}" alt="image" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{$nominee->name}}<span class="heart"><i class="fa-solid fa-heart">
+                    {{$nominee->votes->count()}}</i></span></h5>
+              <p class="card-text">{{$nominee->short_description}}</p>
             </div>
-            <h1>Legacy Builders Award</h1>
+            <div class="card-footer">
+              {{-- @if (Auth::check() && !$nominee->votes->contains('user_id', Auth::id())) --}}
+
+              <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
+                @csrf
+                @method('post')
+                <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
+                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+
+                {{-- @else
+                <button type="disabled" class="btn btn-light">Voted</button>
+                @endif --}}
+
+
+                <button type="submit" class="btn btn-succes">Vote Now</button>
+              </form>
+              <div class=" img">
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal">
+                  <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
+                </a>
+              </div>
+
+
+
+
+            </div>
           </div>
         </div>
-        @if (session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
-        @endif
-
-        @if (session('error'))
-        <p style="color: red;">{{ session('error') }}</p>
-        @endif
-
-
-        <div class="row">
-          @foreach($nominees as $nominee)
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="card">
-              <img src="{{ asset('storage/' .$nominee->logo) }}" alt="image" class="card-img-top">
-              <div class="card-body">
-                <h5 class="card-title">{{$nominee->name}}<span class="heart"><i class="fa-solid fa-heart">
-                      {{$nominee->votes->count()}}</i></span></h5>
-                <p class="card-text">{{$nominee->short_description}}</p>
-              </div>
-              <div class="card-footer">
-                {{-- @if (Auth::check() && !$nominee->votes->contains('user_id', Auth::id())) --}}
-
-                <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
-                  @csrf
-                  @method('post')
-                  <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
-                  <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-
-                  {{-- @else
-                  <button type="disabled" class="btn btn-light">Voted</button>
-                  @endif --}}
-
-
-                  <button type="submit" class="btn btn-succes">Vote Now</button>
-                </form>
-                <div class=" img">
-
-                  <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
-                </div>
+        @empty
+        <div class="col-12">
+          <p>No Nominees found</p>
+        </div>
+        @endforelse
+      </div>
+    </div>
+  </div>
+  </div>
 
 
 
 
-              </div>
-            </div>
+  <!-- Modal -->
+  <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header container-fluid">
+
+          <div class="circle-container">
+            <img src="{{ asset('storage/' .$nominee->logo)}}" alt="image" class="circle">
           </div>
-          @endforeach
+          <div>
+            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          This is the content of the modal.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
   </div>
+
 
   <!-- Bootstrap JS (optional, for functionality like modals, tooltips) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

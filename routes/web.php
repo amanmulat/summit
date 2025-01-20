@@ -20,9 +20,7 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/test', function () {
-    return view('test');
-});
+
 
 // Route::get('/email/verify', function () {
 //     return view('auth.verify-email');

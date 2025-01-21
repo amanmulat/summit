@@ -155,9 +155,9 @@
       background-size: cover;
       background-position: center;
       overflow: hidden;
-      display: flex;
       align-items: center;
       justify-content: center;
+      margin: auto;
     }
 
     .circle {
@@ -299,9 +299,9 @@
         @if(!empty($nominees))
         @forelse($nominees as $nominee)
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="card">
-            <img src="{{ asset('storage/' .$nominee->logo) }}" alt="image" class="card-img-top">
-            <div class="card-body">
+          <div class="card" data-id="{{ $nominee->id }}">
+            <img src="{{ asset('storage/' .$nominee->logo) }}">
+            <div class="card-body text-center">
               <h5 class="card-title">{{$nominee->name}}<span class="heart"><i class="fa-solid fa-heart">
                     {{$nominee->votes->count()}}</i></span></h5>
               <p class="card-text">{{$nominee->short_description}}</p>
@@ -323,8 +323,8 @@
                 <button type="submit" class="btn btn-succes">Vote Now</button>
               </form>
               <div class=" img">
-                <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal" data-id="{{ $nominee->id }}>
-                  <img src=" {{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal">
+                  <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
                 </a>
               </div>
 
@@ -349,29 +349,59 @@
 
 
   <!-- Modal -->
-  <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
       <div class="modal-content">
         <div class="modal-header container-fluid">
 
-          <div class="circle-container">
+          {{-- <div class="circle-container">
             <img src="{{ asset('storage/' .$nominee->logo)}}" alt="image" class="circle">
-          </div>
+          </div> --}}
           <div>
             <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          This is the content of the modal.
+        <div class="modal-body text-center">
+          <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
+            <img src="{{ asset('storage/' .$nominee->logo)}}" alt="image" class="circle">
+          </div>
+          <h5 class="modal-title mt-2" id="detailsModalLabel"></h5>
+          <h3 id="modalCategory" class="mb-2"></h3>
+          <p id="modalDescription"></p>
+
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+        <div class="modal-footer border-0 justify-content-center margin-auto">
+          <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
+            @csrf
+            @method('post')
+            <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
+            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+            <button type="button" class="btn btn-primary">Vote Now</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    document.querySelectorAll('.card a').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+  
+        const title = this.getAttribute('data-title');
+        const category = this.getAttribute('data-category');
+        const description = this.getAttribute('data-description');
+        const image = this.getAttribute('data-image');
+        const link = this.getAttribute('data-link');
+  
+        document.getElementById('detailsModalLabel').textContent = title;
+        document.getElementById('modalCategory').textContent = category;
+        document.getElementById('modalDescription').textContent = description;
+        document.getElementById('modalImage').setAttribute('src', image);
+      });
+    });
+  </script>
 
 
   <!-- Bootstrap JS (optional, for functionality like modals, tooltips) -->

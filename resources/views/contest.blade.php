@@ -323,8 +323,8 @@
                 <button type="submit" class="btn btn-succes">Vote Now</button>
               </form>
               <div class=" img">
-                <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal">
-                  <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal" data-id="{{ $nominee->id }}>
+                  <img src=" {{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
                 </a>
               </div>
 
@@ -354,9 +354,9 @@
       <div class="modal-content">
         <div class="modal-header container-fluid">
 
-          {{-- <div class="circle-container">
+          <div class="circle-container">
             <img src="{{ asset('storage/' .$nominee->logo)}}" alt="image" class="circle">
-          </div> --}}
+          </div>
           <div>
             <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
           </div>

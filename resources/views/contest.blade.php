@@ -122,6 +122,15 @@
       color: white;
     }
 
+    .btn-dis {
+      width: 100%;
+      padding: 10px 13px;
+      background: white;
+      border-radius: 8px;
+      color: black;
+      border: 1px solid #4d4d4d;
+    }
+
     .card-footer {
       background-color: white;
       align-content: center;
@@ -307,7 +316,18 @@
               <p class="card-text">{{$nominee->short_description}}</p>
             </div>
             <div class="card-footer">
-              {{-- @if (Auth::check() && !$nominee->votes->contains('user_id', Auth::id())) --}}
+              @if (Auth::check() && $nominee->votes->contains('user_id', Auth::id()))
+              <form class="bottom-form">
+                @csrf
+                <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
+                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+
+                <!-- Button for users who have already voted -->
+                <button type="button" class="btn btn-light btn-dis" disabled>
+                  Voted
+                </button>
+              </form>
+              @else
 
               <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
                 @csrf
@@ -322,6 +342,7 @@
 
                 <button type="submit" class="btn btn-succes">Vote Now</button>
               </form>
+              @endif
               <div class=" img">
                 <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal">
                   <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
@@ -375,9 +396,9 @@
           <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
             @csrf
             @method('post')
-            <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
+            <input type="hidden" name="nominee_id" id="modalNomineeId" value="{{ $nominee->id }}">
             <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-            <button type="button" class="btn btn-primary">Vote Now</button>
+            <button type="button" class="btn btn-primary" id="voteButton">Vote Now</button>
           </form>
         </div>
       </div>
@@ -388,7 +409,7 @@
     document.querySelectorAll('.card a').forEach(link => {
       link.addEventListener('click', function (e) {
         e.preventDefault();
-  
+        const nomineeId = this.closest('.card').getAttribute('data-id');
         const title = this.getAttribute('data-title');
         const category = this.getAttribute('data-category');
         const description = this.getAttribute('data-description');
@@ -399,6 +420,22 @@
         document.getElementById('modalCategory').textContent = category;
         document.getElementById('modalDescription').textContent = description;
         document.getElementById('modalImage').setAttribute('src', image);
+        document.getElementById('modalNomineeId').value = nomineeId;
+
+        const hasVoted = @json($userVotes ?? []).includes(parseInt(nomineeId));
+        const voteButton = document.getElementById('voteButton');
+
+        if (hasVoted) {
+        voteButton.textContent = "Voted";
+        voteButton.classList.remove("btn-primary");
+        voteButton.classList.add("btn-secondary");
+        voteButton.disabled = true;
+        } else {
+        voteButton.classList.remove("btn-secondary");
+        voteButton.classList.add("btn-primary");
+        voteButton.disabled = false;
+        }
+
       });
     });
   </script>

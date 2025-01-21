@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoteController;
+use App\Models\Vote;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -17,9 +19,8 @@ use Illuminate\Http\Request;
 
 //     return redirect('/home');
 // })->middleware(['auth', 'signed'])->name('verification.verify');
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontendController::class, 'index'])->name('home');
+
 
 
 // Route::get('/email/verify', function () {

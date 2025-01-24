@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\VoteController;
 use App\Models\Vote;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,10 @@ use Illuminate\Http\Request;
 // })->middleware(['auth', 'signed'])->name('verification.verify');
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 
-
+Route::controller(SocialiteController::class)->group(function(){
+        Route::get('auth/google', 'googleLogin')->name('auth.google');
+        Route::get('auth/google-callback', 'googleAuthentication')->name('auth.google-callback');
+});
 
 // Route::get('/email/verify', function () {
 //     return view('auth.verify-email');

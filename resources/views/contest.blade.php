@@ -114,7 +114,7 @@
 
     }
 
-    .btn {
+    .btn-v {
       width: 100%;
       padding: 10px 13px;
       background: linear-gradient(360deg, #38AB00 -21.86%, #3CA17A 130.06%);
@@ -122,15 +122,26 @@
       color: white;
     }
 
-    .btn-dis {
-      width: 100%;
-      padding: 10px 13px;
-      background: white;
-      border-radius: 8px;
-      color: black;
-      border: 1px solid #4d4d4d;
+    .btn-v:hover{
+        color: white;
+    }
+    .category-button {
+        width: 90%;
+        border: 1px solid transparent;
+        transition: border-color 0.3s;
+        border-radius:10px;
+        padding: 8px;
     }
 
+    .category-button:hover {
+        border-color: green;
+
+    }
+
+    .category-button.active{
+        background: linear-gradient(360deg, #38AB00 -21.86%, #3CA17A 130.06%);
+        color: white;
+    }
     .card-footer {
       background-color: white;
       align-content: center;
@@ -148,15 +159,7 @@
       width: 100%;
     }
 
-    .custom-select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin-top: 10px;
-    }
-
-    .circle-container {
+       .circle-container {
       width: 200px;
       height: 200px;
       border-radius: 50%;
@@ -231,17 +234,15 @@
         <ul class="navbar-nav flex-row">
           <li class="nav-item me-3 me-lg-1">
             <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-              <button type="submit" class="btn btn-succes">Reserve Your Spot</button>
+              <button type="submit" class="btn btn-succes btn-v">Reserve Your Spot</button>
             </a>
           </li>
           <li class="nav-item me-3 me-lg-1">
             <form method="POST" action="{{ route('logout') }}">
               @csrf
-
-              <x-primary-button :href="route('logout')" onclick="event.preventDefault();
-                                                            this.closest('form').submit();" style="margin-top: 8px">
-                {{ __('Log Out') }}
-                </x-dropdown-link>
+              <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                <button type="submit" class="btn btn-succes btn-v">Logout</button>
+              </a>
             </form>
           </li>
 
@@ -254,36 +255,20 @@
     <div class="col-md-4 col-sm-8 col-lg-3 sidebar">
       <h2>Choose the Categories</h2>
       <form action="{{ route('dashboard') }}" method="GET">
+            <div class="d-flex flex-wrap gap-2">
+                <button type="submit" name="category" value="" class="category-button {{ request('category') == '' ? 'active' : '' }}" style="width: 90%">
+                    All Categories
+                </button>
+                @foreach($categories as $category)
+                <button type="submit" name="category" value="{{ $category->id }}" class="category-button  {{ request('category') == $category->id ? 'active' : '' }}" style="width: 90%">
+                    {{ $category->name }}
+                </button>
+                @endforeach
+            </div>
         <div>
-
-          <select class="custom-select" name="category" id="category" onchange="this.form.submit()">
-            <option value="">Select by Category</option>
-            @foreach($categories as $category)
-            <option value="{{ $category->id }}" {{ request('category')==$category->id ? 'selected' : ''
-              }}>{{$category->name}}</option>
-            @endforeach
-          </select>
-        </div>
-        <div>
-          <select class="custom-select" name="technology" id="technology" onchange="this.form.submit()">
-            <option value="">Select by Technology</option>
-            @foreach($technologies as $technology)
-            <option value="{{ $technology->id }}" {{ request('technology')==$technology->id ? 'selected' : ''
-              }}>{{$technology->name}}</option>
-            @endforeach
-          </select>
-        </div>
-        <div>
-          <select class="custom-select" name="awardType" id="awardType" onchange="this.form.submit()">
-            <option value="">Select by Award Type</option>
-            @foreach($awardTypes as $awardType)
-            <option value="{{ $awardType->id }}" {{ request('award_type')==$awardType->id ? 'selected' : ''
-              }}>{{$awardType->name}}</option>
-            @endforeach
-          </select>
-        </div>
       </form>
     </div>
+  </div>
 
 
     <div class="col-md-8 col-sm-4 col-lg-9 main">
@@ -323,7 +308,7 @@
                 <input type="hidden" name="user_id" value="{{ Auth::id() }}">
 
                 <!-- Button for users who have already voted -->
-                <button type="button" class="btn btn-light btn-dis" disabled>
+                <button type="button" class="btn btn-light" disabled>
                   Voted
                 </button>
               </form>
@@ -334,24 +319,16 @@
                 @method('post')
                 <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
                 <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-
-                {{-- @else
-                <button type="disabled" class="btn btn-light">Voted</button>
-                @endif --}}
-
-
-                <button type="submit" class="btn btn-succes">Vote Now</button>
+                <button type="submit" class="btn btn-succes btn-v">Vote Now</button>
               </form>
               @endif
               <div class=" img">
-                <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal">
+                <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal" data-title="{{ $nominee->name }}" data-category="{{ $nominee->category->name }}"
+                    data-description="{{ $nominee->description }}" data-image="{{'storage/'.$nominee->logo }}"
+                    data-link="{{$nominee->link}}">
                   <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
                 </a>
               </div>
-
-
-
-
             </div>
           </div>
         </div>
@@ -369,76 +346,56 @@
 
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered ">
-      <div class="modal-content">
-        <div class="modal-header container-fluid">
+   <!-- Modal -->
+   <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true"
+   style="background-image:url('images/assets/images/Rectangle1.png');">
+   <div class="modal-dialog modal-dialog-centered ">
+       <div class="modal-content">
+           <div class="modal-header border-0 justify-content-end">
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+           <div class="modal-body text-center">
+               <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
+                   <img src="" alt="image" class="circle" id="modalImage">
+               </div>
+               <h5 class="modal-title mt-2" id="detailsModalLabel"></h5>
+               <h3 id="modalCategory" class="mb-2"></h3><br>
+               <p id="modalDescription"></p>
 
-          {{-- <div class="circle-container">
-            <img src="{{ asset('storage/' .$nominee->logo)}}" alt="image" class="circle">
-          </div> --}}
-          <div>
-            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-          </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
-            <img src="{{ asset('storage/' .$nominee->logo)}}" alt="image" class="circle">
-          </div>
-          <h5 class="modal-title mt-2" id="detailsModalLabel"></h5>
-          <h3 id="modalCategory" class="mb-2"></h3>
-          <p id="modalDescription"></p>
+           </div>
+           <div class="modal-footer border-0 justify-content-center margin-auto">
+               <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
+                   @csrf
+                   @method('post')
+                   <input type="hidden" name="nominee_id" value="modalNomineeId">
+                   <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                   <button type="submit" class="btn btn-primary btn-v">Vote Now</button>
+               </form>
+           </div>
+       </div>
+   </div>
+</div>
 
-        </div>
-        <div class="modal-footer border-0 justify-content-center margin-auto">
-          <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
-            @csrf
-            @method('post')
-            <input type="hidden" name="nominee_id" id="modalNomineeId" value="{{ $nominee->id }}">
-            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-            <button type="button" class="btn btn-primary" id="voteButton">Vote Now</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
+<script>
     document.querySelectorAll('.card a').forEach(link => {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        const nomineeId = this.closest('.card').getAttribute('data-id');
-        const title = this.getAttribute('data-title');
-        const category = this.getAttribute('data-category');
-        const description = this.getAttribute('data-description');
-        const image = this.getAttribute('data-image');
-        const link = this.getAttribute('data-link');
-  
-        document.getElementById('detailsModalLabel').textContent = title;
-        document.getElementById('modalCategory').textContent = category;
-        document.getElementById('modalDescription').textContent = description;
-        document.getElementById('modalImage').setAttribute('src', image);
-        document.getElementById('modalNomineeId').value = nomineeId;
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
 
-        const hasVoted = @json($userVotes ?? []).includes(parseInt(nomineeId));
-        const voteButton = document.getElementById('voteButton');
+    const title = this.getAttribute('data-title');
+    const category = this.getAttribute('data-category');
+    const description = this.getAttribute('data-description');
+    const image = this.getAttribute('data-image');
+    const link = this.getAttribute('data-link');
+    const nomineeId = this.closest('.card').getAttribute('data-id');
 
-        if (hasVoted) {
-        voteButton.textContent = "Voted";
-        voteButton.classList.remove("btn-primary");
-        voteButton.classList.add("btn-secondary");
-        voteButton.disabled = true;
-        } else {
-        voteButton.classList.remove("btn-secondary");
-        voteButton.classList.add("btn-primary");
-        voteButton.disabled = false;
-        }
+    document.getElementById('detailsModalLabel').textContent = title;
+    document.getElementById('modalCategory').textContent = category;
+    document.getElementById('modalDescription').textContent = description;
+    document.getElementById('modalImage').setAttribute('src', image);
+    document.getElementById('modalNomineeId').value = nomineeId;
 
-      });
-    });
-  </script>
+}); });
+</script>
 
 
   <!-- Bootstrap JS (optional, for functionality like modals, tooltips) -->

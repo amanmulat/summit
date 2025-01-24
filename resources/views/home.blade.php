@@ -114,11 +114,15 @@
 
         }
 
-        .btn {
+        .btn-v {
             width: 100%;
             padding: 10px 13px;
             background: linear-gradient(360deg, #38AB00 -21.86%, #3CA17A 130.06%);
             border-radius: 8px;
+            color: white;
+        }
+
+        .btn-v:hover{
             color: white;
         }
 
@@ -139,13 +143,7 @@
             width: 100%;
         }
 
-        .custom-select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-top: 10px;
-        }
+
 
         .circle-container {
             width: 200px;
@@ -222,7 +220,7 @@
                 <ul class="navbar-nav flex-row">
                     <li class="nav-item me-3 me-lg-1">
                         <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-                            <button type="submit" class="btn btn-succes">Reserve Your Spot</button>
+                            <button type="submit" class="btn btn-succes btn-v">Reserve Your Spot</button>
                         </a>
                     </li>
                 </ul>
@@ -236,34 +234,15 @@
         <div class="col-md-4 col-sm-8 col-lg-3 sidebar">
             <h2>Choose the Categories</h2>
             <form action="{{ route('home') }}" method="GET">
-                <div>
-
-                    <select class="custom-select" name="category" id="category" onchange="this.form.submit()">
-                        <option value="">Select by Category</option>
-                        @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ request('category')==$category->id ? 'selected' : ''
-                            }}>{{$category->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <select class="custom-select" name="technology" id="technology" onchange="this.form.submit()">
-                        <option value="">Select by Technology</option>
-                        @foreach($technologies as $technology)
-                        <option value="{{ $technology->id }}" {{ request('technology')==$technology->id ? 'selected' :
-                            ''
-                            }}>{{$technology->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <select class="custom-select" name="awardType" id="awardType" onchange="this.form.submit()">
-                        <option value="">Select by Award Type</option>
-                        @foreach($awardTypes as $awardType)
-                        <option value="{{ $awardType->id }}" {{ request('award_type')==$awardType->id ? 'selected' : ''
-                            }}>{{$awardType->name}}</option>
-                        @endforeach
-                    </select>
+                <div class="d-flex flex-wrap gap-2">
+                    <button type="submit" name="category" value="" class="btn btn-light  {{ request('category') == '' ? 'active' : '' }}" style="width: 90%">
+                        All Categories
+                    </button>
+                    @foreach($categories as $category)
+                    <button type="submit" name="category" value="{{ $category->id }}" class="btn btn-light {{ request('category') == $category->id ? 'active' : '' }}" style="width: 90%">
+                        {{ $category->name }}
+                    </button>
+                    @endforeach
                 </div>
             </form>
         </div>
@@ -285,8 +264,6 @@
             @if (session('error'))
             <p style="color: red;">{{ session('error') }}</p>
             @endif
-
-
             <div class="row">
                 @if(!empty($nominees))
                 @forelse($nominees as $nominee)
@@ -299,33 +276,35 @@
                             <p class="card-text">{{$nominee->short_description}}</p>
                         </div>
                         <div class="card-footer">
+                            @if (Auth::check() && $nominee->votes->contains('user_id', Auth::id()))
+                            <form class="bottom-form">
+                              @csrf
+                              <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
+                              <input type="hidden" name="user_id" value="{{ Auth::id() }}">
 
+                              <!-- Button for users who have already voted -->
+                              <button type="button" class="btn btn-light" disabled>
+                                Voted
+                              </button>
+                            </form>
+                            @else
 
                             <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
-                                @csrf
-                                @method('post')
-                                <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
-                                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-
-
-                                @if (Auth::check() && !$nominee->votes->contains('user_id', Auth::id()))
-                                <button class="btn btn-light" disabled>Voted</button>
-                                @else
-                                <button type="submit" class="btn btn-succes">Vote Now</button>
-                                @endif
+                              @csrf
+                              @method('post')
+                              <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
+                              <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                              <button type="submit" class="btn btn-succes btn-v">Vote Now</button>
                             </form>
+                            @endif
                             <div class=" img">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#DetailModal"
                                     data-title="{{ $nominee->name }}" data-category="{{ $nominee->category->name }}"
-                                    data-description="{{ $nominee->description }}" data-image="{{$nominee->logo }}"
+                                    data-description="{{ $nominee->description }}" data-image="{{'storage/'.$nominee->logo }}"
                                     data-link="{{$nominee->link}}">
                                     <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
                                 </a>
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>
@@ -338,7 +317,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
 
 
@@ -353,7 +332,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
-                        <img src="{{ asset('storage/' .$nominee->logo)}}" alt="image" class="circle" id="modalImage">
+                        <img src="" alt="image" class="circle" id="modalImage">
                     </div>
                     <h5 class="modal-title mt-2" id="detailsModalLabel"></h5>
                     <h3 id="modalCategory" class="mb-2"></h3>
@@ -364,9 +343,9 @@
                     <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
                         @csrf
                         @method('post')
-                        <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
+                        <input type="hidden" name="nominee_id" value="modalNomineeId">
                         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                        <button type="submit" class="btn btn-primary">Vote Now</button>
+                        <button type="submit" class="btn btn-primary btn-v">Vote Now</button>
                     </form>
                 </div>
             </div>
@@ -378,19 +357,21 @@
         document.querySelectorAll('.card a').forEach(link => {
       link.addEventListener('click', function (e) {
         e.preventDefault();
- 
+
         const title = this.getAttribute('data-title');
         const category = this.getAttribute('data-category');
         const description = this.getAttribute('data-description');
         const image = this.getAttribute('data-image');
         const link = this.getAttribute('data-link');
- 
+        const nomineeId = this.closest('.card').getAttribute('data-id');
+
         document.getElementById('detailsModalLabel').textContent = title;
         document.getElementById('modalCategory').textContent = category;
         document.getElementById('modalDescription').textContent = description;
         document.getElementById('modalImage').setAttribute('src', image);
-      });
-    });
+        document.getElementById('modalNomineeId').value = nomineeId;
+
+    }); });
     </script>
 
 

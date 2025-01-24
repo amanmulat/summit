@@ -32,9 +32,8 @@ class NomineeResource extends Resource
                 Forms\Components\TextInput::make('link')->label('Link')->required(),
                 Forms\Components\TextInput::make('short_description')->label('Short Description')->required(),
                 Forms\Components\TextInput::make('description')->label('Description')->required(),
-                Forms\Components\Select::make('technology_id')->relationship('technology', 'name')->label('Technology')->required(),
                 Forms\Components\Select::make('category_id')->relationship('category', 'name')->label('Category')->required(),
-                Forms\Components\Select::make('award_type_id')->relationship('awardType', 'name')->label('Award Type')->required(),
+
 
 
 
@@ -60,15 +59,10 @@ class NomineeResource extends Resource
                 Tables\Columns\TextColumn::make('description')->label('Description')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('technology.name')->label('Technology')
-                    ->searchable()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('category.name')->label('Category')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('awardType.name')->label('Award Type')
-                    ->searchable()
-                    ->sortable(),
+
 
             ])
             ->filters([

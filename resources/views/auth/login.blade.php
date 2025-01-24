@@ -46,6 +46,14 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+        <div class=" flex items-center justify-center mt-4">
+            <a  href="{{route('auth.google')}}" class="'inline-flex items-center px-4 py-2 bg-white border
+    border-red-50 rounded-md font-semibold text-xs text-red-700 capitalize tracking-widest  hover:bg-gray-100
+    focus:outline-none focus:ring-1 focus:ring-green-500 focus:ring-offset-1 disabled:opacity-25 transition ease-in-out
+    duration-150'">
+                Sign In With Google
+            </a>
+        </div>
         <div class="flex items-center justify-between mt-8">
             <a class="underline text-sm text-black-500 hover:text-black-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 200; font-size: 14px;"

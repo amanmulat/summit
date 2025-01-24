@@ -16,6 +16,7 @@
 
 .btn:hover {
     background: linear-gradient(360deg, #3ca17a -21.86%, #38ab00 130.06%);
+    color: white;
 }
 
 .btn:focus {

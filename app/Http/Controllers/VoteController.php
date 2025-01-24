@@ -15,26 +15,18 @@ class VoteController extends Controller
     public function index(Request $request)
     {
 
-        $technologies = Technology::all();
-        $awardTypes = AwardType::all();
+        $selectedCategoryId = $request->input('category');
+
+
         $categories = Category::all();
 
-        // dd($request->all());
 
-        $nominees = Nominee::when($request->input('category'), function ($query) use ($request) {
-            return $query->where('category_id', $request->category);
-        })->when($request->input('awardType'), function ($query) use ($request) {
-            return $query->where('award_type_id', $request->awardType);
-        })->when($request->input('technology'), function ($query) use ($request) {
-            return $query->where('technology_id', $request->technology);
+        $nominees = Nominee::when($selectedCategoryId, function ($query, $selectedCategoryId) {
+            return $query->where('category_id', $selectedCategoryId);
         })->get();
 
-        return view('contest', [
-            'categories' => $categories,
-            'awardTypes' => $awardTypes,
-            'technologies' => $technologies,
-            'nominees' => $nominees,
-        ]);
+
+        return view('contest', compact('categories', 'nominees', 'selectedCategoryId'));
     }
 
     public function store(Request $request)

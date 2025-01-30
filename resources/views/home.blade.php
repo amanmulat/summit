@@ -193,7 +193,7 @@
                 <!-- Left elements -->
                 <div class="d-flex">
                     <!-- Brand -->
-                    <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="#">
+                    <a class="mb-1 navbar-brand me-2 d-flex align-items-center" href="#">
                         <img src="{{asset('assets/images/lg.svg')}}" width="210px" alt="MDB Logo" loading="lazy"
                             style="margin-top: 2px;" />
                     </a>
@@ -203,41 +203,23 @@
                 </div>
                 <!-- Left elements -->
 
-                <!-- Center elements -->
-                <ul class="navbar-nav flex-row d-none d-md-flex">
-                    <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-                            <span><i class="fa-regular fa-calendar"></i></span>
-                            <strong class="d-none d-sm-block ms-1">01 Jan 2025</strong>
-                        </a>
-                    </li>
 
-                    <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-                            <span><i class="fa-solid fa-location-dot"></i></span>
-                            <strong class="d-none d-sm-block ms-1">Skylight Hotel, Addis Ababa</strong>
-                        </a>
-                    </li>
-                    <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-                            <span><i class="fa-brands fa-instagram"></i></span>
-                        </a>
-                    </li>
-                    <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-                            <span><i class="fa-brands fa-facebook-f"></i></span>
-                        </a>
-                    </li>
-
-
-                </ul>
-                <!-- Center elements -->
 
                 <!-- Right elements -->
-                <ul class="navbar-nav flex-row">
-                    <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-                            <button type="submit" class="btn btn-succes btn-v">Reserve Your Spot</button>
+                <ul class="flex-row navbar-nav">
+                    <li class="nav-item me-6 me-lg-1">
+                        <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="#">
+                            About Us
+                        </a>
+                    </li>
+                    <li class="nav-item me-6 me-lg-1">
+                        <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="#">
+                            Schedule
+                        </a>
+                    </li>
+                    <li class="nav-item me-6 me-lg-1">
+                        <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="#">
+                            Faq
                         </a>
                     </li>
                 </ul>
@@ -251,7 +233,7 @@
         <div class="col-md-4 col-sm-8 col-lg-3 sidebar">
             <h2>Choose the Categories</h2>
             <form action="{{ route('home') }}" method="GET">
-                <div class="d-flex flex-wrap gap-2">
+                <div class="flex-wrap gap-2 d-flex">
                     <button type="submit" name="category" value="" class="category-button  {{ request('category') == '' ? 'active' : '' }}" style="width: 60%">
                         All Categories
                     </button>
@@ -349,19 +331,19 @@
         style="background-image:url('images/assets/images/Rectangle1.png');">
         <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content">
-                <div class="modal-header border-0 justify-content-end">
+                <div class="border-0 modal-header justify-content-end">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body text-center">
-                    <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
+                <div class="text-center modal-body">
+                    <div class="mb-3 circle-container d-flex flex-column align-items-center justify-content-center">
                         <img src="" alt="image" class="circle" id="modalImage">
                     </div>
-                    <h3 class="modal-title mt-2" id="detailsModalLabel"></h3>
+                    <h3 class="mt-2 modal-title" id="detailsModalLabel"></h3>
                     <h5 id="modalCategory" class="mb-2"></h5>
                     <p id="modalDescription"></p>
 
                 </div>
-                <div class="modal-footer border-0 justify-content-center margin-auto">
+                <div class="border-0 modal-footer justify-content-center margin-auto">
                     <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
                         @csrf
                         @method('post')

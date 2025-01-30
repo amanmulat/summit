@@ -238,7 +238,7 @@
         <!-- Left elements -->
         <div class="d-flex">
           <!-- Brand -->
-          <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="#">
+          <a class="mb-1 navbar-brand me-2 d-flex align-items-center" href="#">
             <img src="{{asset('assets/images/lg.svg')}}" width="210px" alt="MDB Logo" loading="lazy"
               style="margin-top: 2px;" />
           </a>
@@ -249,7 +249,7 @@
         <!-- Left elements -->
 
         <!-- Center elements -->
-        <ul class="navbar-nav flex-row d-none d-md-flex">
+        <ul class="flex-row navbar-nav d-none d-md-flex">
           <li class="nav-item me-3 me-lg-1">
             <a class="nav-link d-sm-flex align-items-sm-center" href="#">
               <span><i class="fa-regular fa-calendar"></i></span>
@@ -279,7 +279,7 @@
         <!-- Center elements -->
 
         <!-- Right elements -->
-        <ul class="navbar-nav flex-row">
+        <ul class="flex-row navbar-nav">
           <li class="nav-item me-3 me-lg-1">
             <a class="nav-link d-sm-flex align-items-sm-center" href="#">
               <button type="submit" class="btn btn-succes btn-v">Reserve Your Spot</button>
@@ -303,7 +303,7 @@
     <div class="col-md-4 col-sm-8 col-lg-3 sidebar">
       <h2>Choose the Categories</h2>
       <form action="{{ route('dashboard') }}" method="GET">
-            <div class="d-flex flex-wrap gap-2">
+            <div class="flex-wrap gap-2 d-flex">
                 <button type="submit" name="category" value="" class="category-button {{ request('category') == '' ? 'active' : '' }}" style="width: 60%">
                     All Categories
                 </button>
@@ -419,19 +419,19 @@
    style="background-image:url('images/assets/images/Rectangle1.png');">
    <div class="modal-dialog modal-dialog-centered ">
        <div class="modal-content">
-           <div class="modal-header border-0 justify-content-end">
+           <div class="border-0 modal-header justify-content-end">
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
            </div>
-           <div class="modal-body text-center">
-               <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
+           <div class="text-center modal-body">
+               <div class="mb-3 circle-container d-flex flex-column align-items-center justify-content-center">
                    <img src="" alt="image" class="circle" id="modalImage">
                </div>
-               <h3 class="modal-title mt-2" id="detailsModalLabel"></h3>
+               <h3 class="mt-2 modal-title" id="detailsModalLabel"></h3>
                <h5 id="modalCategory" class="mb-2"></h5><br>
                <p id="modalDescription"></p>
 
            </div>
-           <div class="modal-footer border-0 justify-content-center margin-auto">
+           <div class="border-0 modal-footer justify-content-center margin-auto">
                {{-- <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
                    @csrf
                    @method('post')
@@ -468,18 +468,18 @@
 <!-- Confirmation Modal -->
 <div class="modal fade" id="voteConfirmationModal" tabindex="-1" aria-labelledby="voteConfirmationLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-lg rounded-4 border-0">
+        <div class="border-0 shadow-lg modal-content rounded-4">
 
             <!-- Modal Header -->
-            <div class="modal-header bg-primary text-white confirm-modal">
-                <h5 class="modal-title fw-bold justify-center" id="voteConfirmationLabel">
+            <div class="text-white modal-header bg-primary confirm-modal">
+                <h5 class="justify-center modal-title fw-bold" id="voteConfirmationLabel">
                     Confirm Your Vote
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- Modal Body -->
-            <div class="modal-body text-center p-4">
+            <div class="p-4 text-center modal-body">
                 <div class="mb-3">
                     <i class="fa-solid fa-circle-question text-warning fa-3x"></i>
                 </div>
@@ -490,8 +490,8 @@
             </div>
 
             <!-- Modal Footer -->
-            <div class="modal-footer d-flex justify-content-center gap-3 border-0 pb-4">
-                <button type="button" class="btn btn-secondary px-4 py-2 fw-bold rounded-pill" data-bs-dismiss="modal">
+            <div class="gap-3 pb-4 border-0 modal-footer d-flex justify-content-center">
+                <button type="button" class="px-4 py-2 btn btn-secondary fw-bold rounded-pill" data-bs-dismiss="modal">
                     <i class="fa-solid fa-xmark"></i> Cancel
                 </button>
 
@@ -501,7 +501,7 @@
                     @method('post')
                     <input type="hidden" name="nominee_id" id="modalNomineeId">
                     <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                    <button type="submit" class="btn btn-success px-4 py-2 fw-bold rounded-pill btn-confirm">
+                    <button type="submit" class="px-4 py-2 btn btn-success fw-bold rounded-pill btn-confirm">
                         <i class="fa-solid fa-check"></i> Confirm Vote
                     </button>
                 </form>

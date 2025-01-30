@@ -108,6 +108,8 @@
         -1px 1px 2px 0px #F8F8F833 inset,
         -1px -1px 2px 0px #F8F8F880,
         1px 1px 2px 0px #FDFDFD4D;
+
+
     }
 
     .img {
@@ -337,7 +339,7 @@
       @endif
 
 
-      <div class="row">
+      <div class="row gx-2 gy-2">
         @if(!empty($nominees))
         @forelse($nominees as $nominee)
         <div class="col-12 col-md-6 col-lg-4">

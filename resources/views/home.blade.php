@@ -286,7 +286,7 @@
             @if (session('error'))
             <p style="color: red;">{{ session('error') }}</p>
             @endif
-            <div class="row">
+            <div class="row gx-2 gy-2">
                 @if(!empty($nominees))
                 @forelse($nominees as $nominee)
                 <div class="col-12 col-md-6 col-lg-4">

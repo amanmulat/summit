@@ -32,6 +32,7 @@ Route::controller(SocialiteController::class)->group(function(){
 // })->middleware('auth')->name('verification.notice');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    
     Route::get('/dashboard', [VoteController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [VoteController::class, 'store'])->name('vote.submit');
 });

@@ -14,9 +14,9 @@ class VoteController extends Controller
 {
     public function index(Request $request)
     {
-
+        $user = \Illuminate\Support\Facades\Auth::user();
         $selectedCategoryId = $request->input('category');
-
+        $userHasVoted = $user ? Vote::where('user_id', $user->id)->exists() : false;
 
         $categories = Category::all();
 
@@ -26,7 +26,7 @@ class VoteController extends Controller
         })->get();
 
 
-        return view('contest', compact('categories', 'nominees', 'selectedCategoryId'));
+        return view('contest', compact('categories', 'nominees', 'selectedCategoryId', 'userHasVoted'));
     }
 
     public function store(Request $request)
@@ -37,10 +37,9 @@ class VoteController extends Controller
         ]);
 
         $user = \Illuminate\Support\Facades\Auth::user();
-        $nomineeId = $request->input('nominee_id');
-        $existingVote = Vote::where('user_id', $user->id)->where('nominee_id', $nomineeId)->first();
+        $existingVote = Vote::where('user_id', $user->id)->first();
         if ($existingVote) {
-            return redirect()->route('dashboard')->with('error', 'You have already voted for this nominee');
+            return redirect()->route('dashboard')->with('error', 'You have already voted');
         }
         Vote::create([
             'nominee_id' => $request->nominee_id,
@@ -49,9 +48,5 @@ class VoteController extends Controller
         return redirect()->back()->with('success', 'Vote submitted successfully');
     }
 
-    public function getNomineeByAwardType($award_type_id)
-    {
-        $nominees = Nominee::where('award_type_id', $award_type_id)->get();
-        return view('contest', compact('nominees'));
-    }
+
 }

@@ -23,8 +23,7 @@
         }
 
         .head {
-            margin-bottom: 20px;
-            border-bottom: 2px solid #EDECEC;
+
             font-family: "Plus Jakarta Sans", serif;
             font-size: 40px;
             font-weight: 700;
@@ -34,6 +33,12 @@
             text-decoration-skip-ink: none;
             display: flex;
             align-items: center;
+        }
+
+        .head-container{
+            border-bottom: 2px solid #EDECEC;
+            margin-bottom: 20px;
+            font-family: "Plus Jakarta Sans", serif;
         }
 
         .container {
@@ -80,11 +85,12 @@
         .main {
             padding: 15px;
             overflow-y: auto;
-            margin-left: 30px;
+            margin-left: -20px;
         }
 
         .sidebar {
             margin-top: 30px;
+            margin-right: -20px;
         }
 
 
@@ -126,6 +132,24 @@
             color: white;
         }
 
+
+        .category-button {
+        border: 1px solid transparent;
+        transition: border-color 0.3s;
+        border-radius:10px;
+        padding: 8px;
+        margin: -1px 0px
+    }
+
+    .category-button:hover {
+        border-color: green;
+
+    }
+
+    .category-button.active{
+        background: linear-gradient(360deg, #38AB00 -21.86%, #3CA17A 130.06%);
+        color: white;
+    }
         .card-footer {
             background-color: white;
             align-content: center;
@@ -146,10 +170,6 @@
 
 
         .circle-container {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background-image: url('/assets/images/Star.svg');
             background-size: cover;
             background-position: center;
             overflow: hidden;
@@ -159,9 +179,6 @@
         }
 
         .circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
             background-size: cover;
             background-position: center;
             overflow: hidden;
@@ -235,11 +252,11 @@
             <h2>Choose the Categories</h2>
             <form action="{{ route('home') }}" method="GET">
                 <div class="d-flex flex-wrap gap-2">
-                    <button type="submit" name="category" value="" class="btn btn-light  {{ request('category') == '' ? 'active' : '' }}" style="width: 90%">
+                    <button type="submit" name="category" value="" class="category-button  {{ request('category') == '' ? 'active' : '' }}" style="width: 60%">
                         All Categories
                     </button>
                     @foreach($categories as $category)
-                    <button type="submit" name="category" value="{{ $category->id }}" class="btn btn-light {{ request('category') == $category->id ? 'active' : '' }}" style="width: 90%">
+                    <button type="submit" name="category" value="{{ $category->id }}" class="category-button {{ request('category') == $category->id ? 'active' : '' }}" style="width: 60%">
                         {{ $category->name }}
                     </button>
                     @endforeach
@@ -250,11 +267,16 @@
 
         <div class="col-md-8 col-sm-4 col-lg-9 main">
             <div class="row">
-                <div class="col-12 head">
-                    <div class="logo">
-                        <img src="{{ asset('assets/images/award.png') }}" alt="image">
+                <div class="col-12 head-container">
+                    <div class="head">
+                        <div class="logo">
+                            <img src="{{ asset('assets/images/award.png') }}" alt="image">
+                        </div>
+                        <h1>Legacy Builders Award</h1>
                     </div>
-                    <h1>Legacy Builders Award</h1>
+                    <div class='align-bottom'>
+                    <p style="color: black">Support the startup driving meaningful change. Cast your vote for the company shaping the future through innovation, resilience, and growth.</p>
+                    </div>
                 </div>
             </div>
             @if (session('success'))
@@ -270,7 +292,7 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card" data-id="{{ $nominee->id }}">
                         <img src="{{ asset('storage/' .$nominee->logo) }}">
-                        <div class="card-body text-center">
+                        <div class="card-body">
                             <h5 class="card-title">{{$nominee->name}}<span class="heart"><i class="fa-solid fa-heart">
                                         {{$nominee->votes->count()}}</i></span></h5>
                             <p class="card-text">{{$nominee->short_description}}</p>
@@ -294,7 +316,7 @@
                               @method('post')
                               <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
                               <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                              <button type="submit" class="btn btn-succes btn-v">Vote Now</button>
+                              <button type="submit" class="btn btn-succes btn-v" data-nominee-name="{{ $nominee->name }}">Vote Now</button>
                             </form>
                             @endif
                             <div class=" img">
@@ -323,7 +345,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true"
+    <div class="modal fade modal-xl" id="DetailModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true"
         style="background-image:url('images/assets/images/Rectangle1.png');">
         <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content">
@@ -334,8 +356,8 @@
                     <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
                         <img src="" alt="image" class="circle" id="modalImage">
                     </div>
-                    <h5 class="modal-title mt-2" id="detailsModalLabel"></h5>
-                    <h3 id="modalCategory" class="mb-2"></h3>
+                    <h3 class="modal-title mt-2" id="detailsModalLabel"></h3>
+                    <h5 id="modalCategory" class="mb-2"></h5>
                     <p id="modalDescription"></p>
 
                 </div>
@@ -373,6 +395,8 @@
 
     }); });
     </script>
+
+
 
 
     <!-- Bootstrap JS (optional, for functionality like modals, tooltips) -->

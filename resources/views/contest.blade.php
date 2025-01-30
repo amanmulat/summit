@@ -23,8 +23,7 @@
     }
 
     .head {
-      margin-bottom: 20px;
-      border-bottom: 2px solid #EDECEC;
+
       font-family: "Plus Jakarta Sans", serif;
       font-size: 40px;
       font-weight: 700;
@@ -35,6 +34,12 @@
       display: flex;
       align-items: center;
     }
+
+    .head-container{
+            border-bottom: 2px solid #EDECEC;
+            margin-bottom: 20px;
+            font-family: "Plus Jakarta Sans", serif;
+        }
 
     .container {
       padding-top: 30px;
@@ -80,11 +85,12 @@
     .main {
       padding: 15px;
       overflow-y: auto;
-      margin-left: 30px;
+      margin-left: -20px;
     }
 
     .sidebar {
       margin-top: 30px;
+      margin-right:-20px;
     }
 
 
@@ -122,6 +128,12 @@
       color: white;
     }
 
+    .btn-li {
+      width: 100%;
+      padding: 10px 13px;
+      border-radius: 8px;
+    }
+
     .btn-v:hover{
         color: white;
     }
@@ -131,6 +143,7 @@
         transition: border-color 0.3s;
         border-radius:10px;
         padding: 8px;
+        margin: -1px 0px;
     }
 
     .category-button:hover {
@@ -160,10 +173,6 @@
     }
 
        .circle-container {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background-image: url('/assets/images/Star.svg');
       background-size: cover;
       background-position: center;
       overflow: hidden;
@@ -173,13 +182,50 @@
     }
 
     .circle {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
       background-size: cover;
       background-position: center;
       overflow: hidden;
     }
+
+
+
+    .modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.confirm-modal {
+    border-bottom: none;
+    background: linear-gradient(360deg, #38AB00 -21.86%, #3CA17A 130.06%);
+    text-align: center;
+    justify-items: center;
+}
+
+.modal-body i {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+
+.modal-footer button {
+    transition: all 0.2s ease-in-out;
+}
+
+.modal-footer button:hover {
+    transform: scale(1.05);
+}
+
+.btn-confirm{
+    background: linear-gradient(360deg, #38AB00 -21.86%, #3CA17A 130.06%);
+}
+
+
+
   </style>
 </head>
 
@@ -256,11 +302,11 @@
       <h2>Choose the Categories</h2>
       <form action="{{ route('dashboard') }}" method="GET">
             <div class="d-flex flex-wrap gap-2">
-                <button type="submit" name="category" value="" class="category-button {{ request('category') == '' ? 'active' : '' }}" style="width: 90%">
+                <button type="submit" name="category" value="" class="category-button {{ request('category') == '' ? 'active' : '' }}" style="width: 60%">
                     All Categories
                 </button>
                 @foreach($categories as $category)
-                <button type="submit" name="category" value="{{ $category->id }}" class="category-button  {{ request('category') == $category->id ? 'active' : '' }}" style="width: 90%">
+                <button type="submit" name="category" value="{{ $category->id }}" class="category-button  {{ request('category') == $category->id ? 'active' : '' }}" style="width: 60%">
                     {{ $category->name }}
                 </button>
                 @endforeach
@@ -273,12 +319,14 @@
 
     <div class="col-md-8 col-sm-4 col-lg-9 main">
       <div class="row">
-        <div class="col-12 head">
-          <div class="logo">
-            <img src="{{ asset('assets/images/award.png') }}" alt="image">
-          </div>
-          <h1>Legacy Builders Award</h1>
-        </div>
+        <div class="col-12 head-container">
+            <div class="head">
+                <div class="logo">
+                    <img src="{{ asset('assets/images/award.png') }}" alt="image">
+                </div>
+                <h1>Legacy Builders Award</h1>
+            </div>
+        <p style="color: black">Support the startup driving meaningful change. Cast your vote for the company shaping the future through innovation, resilience, and growth.</p>
       </div>
       @if (session('success'))
       <p style="color: green;">{{ session('success') }}</p>
@@ -295,33 +343,50 @@
         <div class="col-12 col-md-6 col-lg-4">
           <div class="card" data-id="{{ $nominee->id }}">
             <img src="{{ asset('storage/' .$nominee->logo) }}">
-            <div class="card-body text-center">
+            <div class="card-body">
               <h5 class="card-title">{{$nominee->name}}<span class="heart"><i class="fa-solid fa-heart">
                     {{$nominee->votes->count()}}</i></span></h5>
               <p class="card-text">{{$nominee->short_description}}</p>
             </div>
             <div class="card-footer">
-              @if (Auth::check() && $nominee->votes->contains('user_id', Auth::id()))
-              <form class="bottom-form">
-                @csrf
-                <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
-                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-
-                <!-- Button for users who have already voted -->
-                <button type="button" class="btn btn-light" disabled>
-                  Voted
+            @if(Auth::check())
+                @if ($nominee->votes->contains('user_id', Auth::id()))
+                    <form class="bottom-form">
+                        @csrf
+                        <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
+                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        <button type="button" class="btn btn-light btn-li" disabled>
+                            Voted
+                        </button>
+                    </form>
+                    <div class=" img">
+                        <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal" data-title="{{ $nominee->name }}" data-category="{{ $nominee->category->name }}"
+                            data-description="{{ $nominee->description }}" data-image="{{'storage/'.$nominee->logo }}"
+                            data-link="{{$nominee->link}}">
+                          <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
+                        </a>
+                    </div>
+                @elseif($userHasVoted)
+                    <a href="#modal" class="btn btn-succes btn-v" data-bs-toggle="modal" data-bs-target="#DetailModal" data-title="{{ $nominee->name }}" data-category="{{ $nominee->category->name }}"
+                        data-description="{{ $nominee->description }}" data-image="{{'storage/'.$nominee->logo }}"
+                        data-link="{{$nominee->link}}">
+                        View Detail
+                    </a>
+                @else
+                <button type="submit" class="btn btn-succes btn-v btn-vote" data-nominee-id="{{ $nominee->id }}"
+                    data-nominee-name="{{ $nominee->name }}">Vote Now</button>
+                @endif
+            @else
+                <button type="button" class="btn btn-success btn-vote"
+                        data-nominee-id="{{ $nominee->id }}"
+                        data-nominee-name="{{ $nominee->name }}">
+                        Vote Now
                 </button>
-              </form>
-              @else
+            @endif
 
-              <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
-                @csrf
-                @method('post')
-                <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
-                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                <button type="submit" class="btn btn-succes btn-v">Vote Now</button>
-              </form>
-              @endif
+            @if(Auth::check() && $userHasVoted)
+
+            @else
               <div class=" img">
                 <a href="#modal" data-bs-toggle="modal" data-bs-target="#DetailModal" data-title="{{ $nominee->name }}" data-category="{{ $nominee->category->name }}"
                     data-description="{{ $nominee->description }}" data-image="{{'storage/'.$nominee->logo }}"
@@ -329,6 +394,7 @@
                   <img src="{{ asset('assets/images/Eye.png') }}" alt="image" class="float-end">
                 </a>
               </div>
+            @endif
             </div>
           </div>
         </div>
@@ -347,7 +413,7 @@
 
 
    <!-- Modal -->
-   <div class="modal fade" id="DetailModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true"
+   <div class="modal fade modal-xl" id="DetailModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true"
    style="background-image:url('images/assets/images/Rectangle1.png');">
    <div class="modal-dialog modal-dialog-centered ">
        <div class="modal-content">
@@ -358,19 +424,19 @@
                <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
                    <img src="" alt="image" class="circle" id="modalImage">
                </div>
-               <h5 class="modal-title mt-2" id="detailsModalLabel"></h5>
-               <h3 id="modalCategory" class="mb-2"></h3><br>
+               <h3 class="modal-title mt-2" id="detailsModalLabel"></h3>
+               <h5 id="modalCategory" class="mb-2"></h5><br>
                <p id="modalDescription"></p>
 
            </div>
            <div class="modal-footer border-0 justify-content-center margin-auto">
-               <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
+               {{-- <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
                    @csrf
                    @method('post')
                    <input type="hidden" name="nominee_id" value="modalNomineeId">
                    <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                    <button type="submit" class="btn btn-primary btn-v">Vote Now</button>
-               </form>
+               </form> --}}
            </div>
        </div>
    </div>
@@ -396,6 +462,76 @@
 
 }); });
 </script>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="voteConfirmationModal" tabindex="-1" aria-labelledby="voteConfirmationLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg rounded-4 border-0">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary text-white confirm-modal">
+                <h5 class="modal-title fw-bold justify-center" id="voteConfirmationLabel">
+                    Confirm Your Vote
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body text-center p-4">
+                <div class="mb-3">
+                    <i class="fa-solid fa-circle-question text-warning fa-3x"></i>
+                </div>
+                <p id="voteMessage" class="fw-semibold fs-5 text-dark">
+                    Would you like to cast your vote for<strong></strong>?
+                </p>
+                <p class="text-danger fw-bold">You can only vote for one nominee.</p>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer d-flex justify-content-center gap-3 border-0 pb-4">
+                <button type="button" class="btn btn-secondary px-4 py-2 fw-bold rounded-pill" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-xmark"></i> Cancel
+                </button>
+
+                <!-- Styled Vote Submission Form -->
+                <form id="voteForm" action="{{ route('vote.submit') }}" method="POST">
+                    @csrf
+                    @method('post')
+                    <input type="hidden" name="nominee_id" id="modalNomineeId">
+                    <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                    <button type="submit" class="btn btn-success px-4 py-2 fw-bold rounded-pill btn-confirm">
+                        <i class="fa-solid fa-check"></i> Confirm Vote
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".btn-vote").forEach(button => {
+            button.addEventListener("click", function() {
+                const nomineeId = this.getAttribute("data-nominee-id");
+                const nomineeName = this.getAttribute("data-nominee-name");
+
+                // Update modal message
+                document.getElementById("voteMessage").innerHTML = `Would you like to cast your vote for <strong><br>${nomineeName}</strong>?`;
+
+                // Set nominee ID in the hidden form input
+                document.getElementById("modalNomineeId").value = nomineeId;
+
+                // Show the confirmation modal
+                let voteModal = new bootstrap.Modal(document.getElementById("voteConfirmationModal"));
+                voteModal.show();
+            });
+        });
+    });
+    </script>
+
+
 
 
   <!-- Bootstrap JS (optional, for functionality like modals, tooltips) -->

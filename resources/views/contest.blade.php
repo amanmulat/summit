@@ -299,8 +299,8 @@
     </nav>
   </header>
 
-  <div class="container-fluid flex-grow-1 d-flex flex-column flex-lg-row">
-    <div class="col-md-4 col-sm-8 col-lg-3 sidebar d-flex flex-column">
+  <div class="container-fluid flex-grow-1 d-flex">
+    <div class="col-md-4 col-sm-8 col-lg-3 sidebar">
       <h2>Choose the Categories</h2>
       <form action="{{ route('dashboard') }}" method="GET">
             <div class="flex-wrap gap-2 d-flex">

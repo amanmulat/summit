@@ -204,9 +204,14 @@
                 <!-- Left elements -->
 
 
-
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
                 <!-- Right elements -->
-                <ul class="flex-row navbar-nav">
+                <div class="collapse navbar-collapse" id="navbarNav">
+
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-6 me-lg-1">
                         <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="https://grvsummit.com/#about">
                             About
@@ -229,8 +234,8 @@
         </nav>
     </header>
 
-    <div class="container-fluid flex-grow-1 d-flex">
-        <div class="col-md-4 col-sm-8 col-lg-3 sidebar">
+    <div class="container-fluid flex-grow-1 d-flex flex-column flex-lg-row">
+        <div class="col-md-4 col-sm-8 col-lg-3 sidebar d-flex flex-column d-none d-lg-block">
             <h2>Choose the Categories</h2>
             <form action="{{ route('home') }}" method="GET">
                 <div class="flex-wrap gap-2 d-flex">
@@ -247,7 +252,7 @@
         </div>
 
 
-        <div class="col-md-8 col-sm-4 col-lg-9 main">
+        <div class="col-12 col-md-12 col-lg-9 main">
             <div class="row">
                 <div class="col-12 head-container">
                     <div class="head">
@@ -257,7 +262,7 @@
                         <h1>Legacy Builders Award</h1>
                     </div>
                     <div class='align-bottom'>
-                    <p style="color: black">Support the startup driving meaningful change. Cast your vote for the company shaping the future through innovation, resilience, and growth.</p>
+                    <p style="color: black">Support the startup driving meaningful change and shaping the future. Cast your vote before February 14, 2025—every vote counts!</p>
                     </div>
                 </div>
             </div>

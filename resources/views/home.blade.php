@@ -209,7 +209,7 @@
                 <ul class="flex-row navbar-nav">
                     <li class="nav-item me-6 me-lg-1">
                         <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="https://grvsummit.com/#about">
-                            About Us
+                            About
                         </a>
                     </li>
                     <li class="nav-item me-6 me-lg-1">

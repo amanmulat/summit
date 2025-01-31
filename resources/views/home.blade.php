@@ -128,6 +128,14 @@
             color: white;
         }
 
+        .alink {
+            width: 100%;
+            padding: 10px 13px;
+            background: linear-gradient(360deg, #38AB00 -21.86%, #3CA17A 130.06%);
+            border-radius: 8px;
+            color: white;
+        }
+
         .btn-v:hover{
             color: white;
         }
@@ -183,6 +191,12 @@
             background-position: center;
             overflow: hidden;
         }
+
+        @media (max-width: 767px) {
+        .sidebar h2 {
+            font-size: 1.5rem;
+        }
+    }
     </style>
 </head>
 
@@ -190,36 +204,47 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light header">
             <div class="container-fluid justify-content-between">
-                <!-- Left elements -->
                 <div class="d-flex">
-                    <!-- Brand -->
-                    <a class="mb-1 navbar-brand me-2 d-flex align-items-center" href="#">
+
+                    <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="#">
                         <img src="{{asset('assets/images/lg.svg')}}" width="210px" alt="MDB Logo" loading="lazy"
                             style="margin-top: 2px;" />
                     </a>
-
-                    <!-- Search form -->
-
                 </div>
-                <!-- Left elements -->
+                <ul class="navbar-nav flex-row d-none d-md-flex">
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                            <span><i class="fa-regular fa-calendar"></i></span>
+                            <strong class="d-none d-sm-block ms-1">01 Jan 2025</strong>
+                        </a>
+                    </li>
+
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                            <span><i class="fa-solid fa-location-dot"></i></span>
+                            <strong class="d-none d-sm-block ms-1">Skylight Hotel, Addis Ababa</strong>
+                        </a>
+                    </li>
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                            <span><i class="fa-brands fa-instagram"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                            <span><i class="fa-brands fa-facebook-f"></i></span>
+                        </a>
+                    </li>
 
 
+                </ul>
+                <!-- Center elements -->
 
                 <!-- Right elements -->
-                <ul class="flex-row navbar-nav">
-                    <li class="nav-item me-6 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="https://grvsummit.com/#about">
-                            About Us
-                        </a>
-                    </li>
-                    <li class="nav-item me-6 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="https://grvsummit.com/#program">
-                            Schedule
-                        </a>
-                    </li>
-                    <li class="nav-item me-6 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="https://grvsummit.com/faq">
-                            Faq
+                <ul class="navbar-nav flex-row">
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                            <button type="submit" class="btn btn-succes btn-v">Reserve Your Spot</button>
                         </a>
                     </li>
                 </ul>
@@ -229,12 +254,12 @@
         </nav>
     </header>
 
-    <div class="container-fluid flex-grow-1 d-flex">
-        <div class="col-md-4 col-sm-8 col-lg-3 sidebar">
+    <div class="container-fluid flex-grow-1 d-flex flex-column flex-lg-row">
+        <div class="col-md-4 col-sm-12 col-lg-3 sidebar d-flex flex-column">
             <h2>Choose the Categories</h2>
             <form action="{{ route('home') }}" method="GET">
-                <div class="flex-wrap gap-2 d-flex">
-                    <button type="submit" name="category" value="" class="category-button  {{ request('category') == '' ? 'active' : '' }}" style="width: 60%">
+                <div class="d-flex flex-wrap gap-2">
+                    <button type="submit" name="category" value="" class="category-button {{ request('category') == '' ? 'active' : '' }}" style="width: 60%">
                         All Categories
                     </button>
                     @foreach($categories as $category)
@@ -247,7 +272,7 @@
         </div>
 
 
-        <div class="col-md-8 col-sm-4 col-lg-9 main">
+        <div class="col-md-8 col-sm-12 col-lg-9 main">
             <div class="row">
                 <div class="col-12 head-container">
                     <div class="head">
@@ -293,13 +318,10 @@
                             </form>
                             @else
 
-                            <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
-                              @csrf
-                              @method('post')
-                              <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
-                              <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                              <button type="submit" class="btn btn-succes btn-v" data-nominee-name="{{ $nominee->name }}">Vote Now</button>
-                            </form>
+
+
+                              <button type="submit" class="btn btn-succes btn-v" onclick="window.location.href='/dashboard';">Vote Now</button>
+
                             @endif
                             <div class=" img">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#DetailModal"
@@ -331,19 +353,19 @@
         style="background-image:url('images/assets/images/Rectangle1.png');">
         <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content">
-                <div class="border-0 modal-header justify-content-end">
+                <div class="modal-header border-0 justify-content-end">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="text-center modal-body">
-                    <div class="mb-3 circle-container d-flex flex-column align-items-center justify-content-center">
+                <div class="modal-body text-center">
+                    <div class="circle-container d-flex flex-column align-items-center justify-content-center mb-3">
                         <img src="" alt="image" class="circle" id="modalImage">
                     </div>
-                    <h3 class="mt-2 modal-title" id="detailsModalLabel"></h3>
+                    <h3 class="modal-title mt-2" id="detailsModalLabel"></h3>
                     <h5 id="modalCategory" class="mb-2"></h5>
                     <p id="modalDescription"></p>
 
                 </div>
-                <div class="border-0 modal-footer justify-content-center margin-auto">
+                <div class="modal-footer border-0 justify-content-center margin-auto">
                     <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
                         @csrf
                         @method('post')

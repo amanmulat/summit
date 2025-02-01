@@ -317,13 +317,7 @@
                             </form>
                             @else
 
-                            <form class="bottom-form" action="{{ route('vote.submit') }}" method="POST">
-                              @csrf
-                              @method('post')
-                              <input type="hidden" name="nominee_id" value="{{ $nominee->id }}">
-                              <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                              <button type="submit" class="btn btn-succes btn-v" data-nominee-name="{{ $nominee->name }}">Vote Now</button>
-                            </form>
+                            <button type="submit" class="btn btn-succes btn-v" onclick="window.location.href='{{ route('vote.submit') }}'; return false;">Vote Now</button>
                             @endif
                             <div class=" img">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#DetailModal"

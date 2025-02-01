@@ -279,7 +279,7 @@
               @csrf
 
                 <button type="submit" class="btn btn-succes btn-v">Logout</button>
-              
+
             </form>
           </li>
 
@@ -364,7 +364,7 @@
                         View Detail
                     </a>
                 @else
-                <button type="submit" class="btn btn-success btn-v"
+                <button type="submit" class="btn btn-success btn-v btn-vote"
                 data-nominee-id="{{ $nominee->id }}"
                 data-nominee-name="{{ $nominee->name }}"
                 data-bs-toggle="modal"

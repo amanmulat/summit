@@ -364,8 +364,11 @@
                         View Detail
                     </a>
                 @else
-                <button type="submit" class="btn btn-succes btn-v btn-vote" data-nominee-id="{{ $nominee->id }}"
-                    data-nominee-name="{{ $nominee->name }}">Vote Now</button>
+                <button type="submit" class="btn btn-success btn-v"
+                data-nominee-id="{{ $nominee->id }}"
+                data-nominee-name="{{ $nominee->name }}"
+                data-bs-toggle="modal"
+                data-bs-target="#voteConfirmationModal">Vote Now</button>
                 @endif
             @else
                 <button type="button" class="btn btn-success btn-vote"

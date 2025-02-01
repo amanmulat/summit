@@ -52,10 +52,10 @@
             </x-primary-button>
         </div>
 
-        <div>
+        {{-- <div>
             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
             <x-input-error :messages="$errors->get('g-recaptcha-response')" class="mt-2" />
-        </div>
+        </div> --}}
 
         <div class="flex items-center justify-end mt-4">
             <a class="text-sm underline rounded-md text-black-500 hover:text-black-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"

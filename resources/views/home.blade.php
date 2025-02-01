@@ -132,6 +132,14 @@
             color: white;
         }
 
+    .alink{
+            width: 100%;
+            padding: 10px 13px;
+            background: linear-gradient(360deg, #38AB00 -21.86%, #3CA17A 130.06%);
+            border-radius: 8px;
+            color: white;
+    }
+
 
         .category-button {
         border: 1px solid transparent;
@@ -226,6 +234,17 @@
                         <a class="nav-link d-sm-flex align-items-sm-center fs-6" href="https://grvsummit.com/faq">
                             Faq
                         </a>
+                    </li>
+
+                    @if(auth()->check())
+                    <li class="nav-item me-6 me-lg-1">
+                        <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-succes btn-v">Logout</button>
+                        </form>
+                        @else
+                        <a href="{{ route('login') }}" class="alink">Login</a>
+                        @endif
                     </li>
                 </ul>
 

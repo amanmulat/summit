@@ -274,12 +274,12 @@
                     Faq
                 </a>
             </li>
-          <li class="nav-item me-3 me-lg-1">
+          <li class="nav-item me-6 me-lg-1">
             <form method="POST" action="{{ route('logout') }}">
               @csrf
-              <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+
                 <button type="submit" class="btn btn-succes btn-v">Logout</button>
-              </a>
+              
             </form>
           </li>
 

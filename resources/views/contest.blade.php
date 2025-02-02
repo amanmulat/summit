@@ -238,7 +238,7 @@
         <!-- Left elements -->
         <div class="d-flex">
           <!-- Brand -->
-          <a class="mb-1 navbar-brand me-2 d-flex align-items-center" href="grvsummit.com">
+          <a class="mb-1 navbar-brand me-2 d-flex align-items-center" href="https://grvsummit.com">
             <img src="{{asset('assets/images/lg.svg')}}" width="210px" alt="MDB Logo" loading="lazy"
               style="margin-top: 2px;" />
           </a>

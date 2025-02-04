@@ -2,6 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\DailyVotesChart;
+use App\Filament\Widgets\RegisteredUsersChart;
+use App\Filament\Widgets\TopStartupsRanking;
+use App\Filament\Widgets\TotalVotesChart;
+use App\Filament\Widgets\VotesByCategoryChart;
+use App\Filament\Widgets\VotesPerCategoryChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -38,8 +44,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                DailyVotesChart::class,
+                RegisteredUsersChart::class,
+                TopStartupsRanking ::class,
+                VotesByCategoryChart::class,
+                TotalVotesChart::class,
+                TopStartupsRanking ::class,
+                // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
+                // VotesPerCategoryChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,

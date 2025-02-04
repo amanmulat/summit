@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // implements MustVerifyEmail
@@ -50,5 +51,10 @@ class User extends Authenticatable
     public function nominees()
     {
         return $this->hasMany(Nominee::class);
+    }
+
+    public function vote(): HasOne
+    {
+        return $this->hasOne(Vote::class, 'user_id');
     }
 }

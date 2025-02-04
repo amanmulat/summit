@@ -10,7 +10,7 @@ class DailyVotesChart extends ChartWidget
 {
     protected static ?string $heading = 'Daily Vote Submissions';
     protected static ?int $sort = 3;
-
+    protected static bool $isLazy = true;
     protected function getData(): array
     {
 
@@ -34,5 +34,20 @@ class DailyVotesChart extends ChartWidget
     protected function getType(): string
     {
         return 'line';
+    }
+
+    public static function canView(): bool
+    {
+        return true;
+    }
+
+    public static function getColumns(): int
+    {
+        return 1; // Set to 1 column
+    }
+
+    public function getColumnSpan(): string|int
+    {
+        return 'full'; // Forces full-width display
     }
 }

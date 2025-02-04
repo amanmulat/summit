@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\User;
+use App\Models\Vote;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
@@ -10,14 +11,7 @@ use Illuminate\Support\Facades\DB;
 class RegisteredUsersChart extends ChartWidget
 {
     protected static ?string $heading = 'User Registrations Over Time';
-
-    protected function extraAttributes(): array
-{
-    return [
-        'class' => 'text-blue-600 font-extrabold text-2xl',
-    ];
-}
-
+    protected static bool $isLazy = true;
     protected function getType(): string
     {
         return 'line';
@@ -42,5 +36,20 @@ class RegisteredUsersChart extends ChartWidget
             ],
             'labels' => $users->pluck('date')->toArray(),
         ];
+    }
+
+    public static function canView(): bool
+    {
+        return true;
+    }
+
+    public static function getColumns(): int
+    {
+        return 1; // Set to 1 column
+    }
+
+    public function getColumnSpan(): string|int
+    {
+        return 'full'; // Forces full-width display
     }
 }

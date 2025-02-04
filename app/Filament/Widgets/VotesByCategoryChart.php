@@ -10,6 +10,7 @@ class VotesByCategoryChart extends ChartWidget
 {
     protected static ?int $refreshInterval = 10;
     protected static ?string $heading = 'Votes Per Category';
+    protected static bool $isLazy = true;
 
     protected function getFilters(): ?array
     {
@@ -79,5 +80,21 @@ class VotesByCategoryChart extends ChartWidget
             ],
             'labels' => $query->pluck('name')->toArray(),
         ];
+    }
+
+
+    public static function canView(): bool
+    {
+        return true;
+    }
+
+    public static function getColumns(): int
+    {
+        return 1;
+    }
+
+    public function getColumnSpan(): string|int
+    {
+        return 'full';
     }
 }

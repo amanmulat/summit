@@ -14,6 +14,7 @@ class TopStartupsRanking extends BaseWidget
 {
     protected static ?string $heading = 'Top 3 Startups by Votes';
     protected static ?int $sort = 2;
+    protected static bool $isLazy = true;
 
     protected function getTableQuery(): Builder
     {
@@ -43,5 +44,20 @@ class TopStartupsRanking extends BaseWidget
                 ->label('Percentage')
                 ->state(fn ($record) => round(($record->votes_count / $totalVotes) * 100, 2) . '%'),
         ];
+    }
+
+    public static function canView(): bool
+    {
+        return true;
+    }
+
+    public static function getColumns(): int
+    {
+        return 1; // Set to 1 column
+    }
+
+    public function getColumnSpan(): string|int
+    {
+        return 'full'; // Forces full-width display
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TopStartupsRanking extends BaseWidget
 {
-    protected static ?string $heading = 'Top 3 Startups by Votes';
+    protected static ?string $heading = 'Top Startups by Votes';
     protected static ?int $sort = 2;
     protected static bool $isLazy = true;
 

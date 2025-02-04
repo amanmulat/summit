@@ -20,7 +20,7 @@ class RegisteredUsersChart extends ChartWidget
     protected function getData(): array
     {
         $users = User::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
-            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->where('created_at', '>=', Carbon::now()->subDays(3))
             ->groupBy('date')
             ->orderBy('date')
             ->get();

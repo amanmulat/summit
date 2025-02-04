@@ -17,15 +17,16 @@ class TotalVotesChart extends ChartWidget
 
     protected function getData(): array
     {
+        $totalVotes = Vote::count();
         return [
             'datasets' => [
                 [
                     'label' => 'Total Votes',
-                    'data' => [Vote::count()],
+                    'data' => [$totalVotes],
                     'backgroundColor' => ['#4CAF50'],
                 ],
             ],
-            'labels' => ['Votes'],
+            'labels' => ['Total Votes'],
         ];
     }
 

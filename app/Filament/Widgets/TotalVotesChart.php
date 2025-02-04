@@ -18,6 +18,10 @@ class TotalVotesChart extends ChartWidget
     protected function getData(): array
     {
         $totalVotes = Vote::count();
+
+        if ($totalVotes === 0) {
+            dd('No votes found');
+        }
         return [
             'datasets' => [
                 [

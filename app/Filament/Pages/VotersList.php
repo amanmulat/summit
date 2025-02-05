@@ -23,7 +23,7 @@ class VotersList extends Page implements HasTable
         return $table
             ->paginated([10, 25, 50, 100, 200, 'all'])
             ->defaultPaginationPageOption(200)
-            ->query(Vote::query())
+            ->query(Vote::query()->latest('created_at'))
             ->columns([
                 TextColumn::make('user.email')
                     ->label('Email')
@@ -39,6 +39,10 @@ class VotersList extends Page implements HasTable
                     ->label('Nominee Voted For')
                     ->sortable()
                     ->searchable(),
+                TextColumn::make('created_at')
+                    ->label('Vote Date & Time')
+                    ->dateTime('Y-m-d H:i:s')
+                    ->sortable(),
             ]);
 
 

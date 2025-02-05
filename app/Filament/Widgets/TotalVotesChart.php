@@ -12,23 +12,26 @@ class TotalVotesChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'doughnut';
+    return 'line';
     }
 
     protected function getData(): array
     {
-        $totalVotes = Vote::count();
-
+        $votesPerDay = Vote::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Total Votes',
-                    'data' => [$totalVotes],
-                    'backgroundColor' => ['#4CAF50'],
+                    'label' => 'Votes Over Time',
+                    'data' => $votesPerDay->pluck('count')->toArray(),
+                    'borderColor' => '#4CAF50',
+                    'backgroundColor' => 'rgba(76, 175, 80, 0.2)',
                 ],
             ],
-            'labels' => ['Total Votes'],
+            'labels' => $votesPerDay->pluck('date')->toArray(),
         ];
     }
 

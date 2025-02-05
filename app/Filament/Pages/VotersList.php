@@ -13,7 +13,7 @@ use Livewire\WithPagination;
 
 class VotersList extends Page implements HasTable
 {
-    use WithPagination;
+
     use InteractsWithTable;
     protected static ?string $model = Vote::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';

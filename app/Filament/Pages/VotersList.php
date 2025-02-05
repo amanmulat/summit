@@ -20,7 +20,7 @@ class VotersList extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->paginated(false)
+
             ->query(Vote::query())
             ->columns([
                 TextColumn::make('user.email')
@@ -37,6 +37,6 @@ class VotersList extends Page implements HasTable
                     ->label('Nominee Voted For')
                     ->sortable()
                     ->searchable(),
-            ]);
+            ])->paginate(100);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\Vote;
 use Filament\Pages\Page;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\PaginationAction;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Table;

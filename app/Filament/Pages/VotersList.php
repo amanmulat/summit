@@ -9,9 +9,11 @@ use Filament\Tables\Actions\PaginationAction;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Table;
+use Livewire\WithPagination;
 
 class VotersList extends Page implements HasTable
 {
+    use WithPagination;
     use InteractsWithTable;
     protected static ?string $model = Vote::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
@@ -20,6 +22,7 @@ class VotersList extends Page implements HasTable
 
     public function table(Table $table): Table
     {
+
         return $table
             ->paginated([10, 25, 50, 100, 200, 'all'])
             ->defaultPaginationPageOption(200)

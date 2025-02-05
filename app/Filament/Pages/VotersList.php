@@ -25,7 +25,7 @@ class VotersList extends Page implements HasTable
 
         return $table
             ->paginated([10, 25, 50, 100, 200, 'all'])
-            ->defaultPaginationPageOption(500)
+            ->defaultPaginationPageOption(300)
             ->query(Vote::query()->latest('created_at'))
             ->columns([
                 TextColumn::make('user.email')

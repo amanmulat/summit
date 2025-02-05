@@ -26,7 +26,7 @@ class TotalVotesChart extends ChartWidget
             'datasets' => [
                 [
                     'label' => 'Total Votes',
-                    'data' => [$totalVotes],
+                    'data' => [1000],
                     'backgroundColor' => ['#4CAF50'],
                 ],
             ],

@@ -37,6 +37,6 @@ class VotersList extends Page implements HasTable
                     ->label('Nominee Voted For')
                     ->sortable()
                     ->searchable(),
-            ])->paginate(100);
+            ])->paginated(100);
     }
 }

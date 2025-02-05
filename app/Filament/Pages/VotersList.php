@@ -18,13 +18,10 @@ class VotersList extends Page implements HasTable
 
     protected static string $view = 'filament.pages.voters-list';
 
-    protected int $page = 1;
-    protected array $selected = [];
-
     public function table(Table $table): Table
     {
         return $table
-
+            ->paginated('25')
             ->query(Vote::query())
             ->columns([
                 TextColumn::make('user.email')
@@ -46,11 +43,4 @@ class VotersList extends Page implements HasTable
 
     }
 
-    public function setPage($page)
-{
-    $this->page = $page;
-    $this->paginators['page'] = $page; // this line here
-
-    $this->selected = [];
-}
 }

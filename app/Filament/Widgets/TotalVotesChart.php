@@ -19,14 +19,12 @@ class TotalVotesChart extends ChartWidget
     {
         $totalVotes = Vote::count();
 
-        if ($totalVotes === 0) {
-            dd('No votes found');
-        }
+
         return [
             'datasets' => [
                 [
                     'label' => 'Total Votes',
-                    'data' => [1000],
+                    'data' => [$totalVotes],
                     'backgroundColor' => ['#4CAF50'],
                 ],
             ],

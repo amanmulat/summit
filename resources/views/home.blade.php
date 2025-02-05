@@ -299,7 +299,7 @@
                     <div class="card" data-id="{{ $nominee->id }}">
                         <img src="{{ asset('storage/' .$nominee->logo) }}">
                         <div class="card-body">
-                            <h5 class="card-title">{{$nominee->name}}<span class="heart d-none"><i class="fa-solid fa-heart">
+                            <h5 class="card-title">{{$nominee->name}}<span class="heart"><i class="fa-solid fa-heart">
                                         {{$nominee->votes->count()}}</i></span></h5>
                             <p class="card-text">{{$nominee->short_description}}</p>
                         </div>

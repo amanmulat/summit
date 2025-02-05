@@ -12,13 +12,7 @@ class VotesByCategoryChart extends ChartWidget
     protected static ?string $heading = 'Votes Per Category';
     protected static bool $isLazy = true;
 
-    protected function getFilters(): ?array
-    {
-        return [
-            'day' => 'Today',
-            'week' => 'This Week',
-        ];
-    }
+
 
     protected function getType(): string
     {
@@ -54,33 +48,22 @@ class VotesByCategoryChart extends ChartWidget
     ];
 }
 
-    protected function getData(): array
-    {
+protected function getData(): array
+{
+    
+    $query = Category::withCount('votes')->get();
 
-        $timeframe = $this->filter; // Get selected filter option
-
-        // 🛠 Filter votes based on timeframe
-        $query = Category::withCount(['votes' => function ($query) use ($timeframe) {
-            if ($timeframe === 'day') {
-                $query->whereDate('created_at', Carbon::today());
-            } elseif ($timeframe === 'week') {
-                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
-            }
-        }])->get();
-
-
-
-        return [
-            'datasets' => [
-                [
-                    'label' => 'Votes',
-                    'data' => $query->pluck('votes_count')->toArray(),
-                    'backgroundColor' => ['#239D24', '#1D72AF', '#F0790E'],
-                ],
+    return [
+        'datasets' => [
+            [
+                'label' => 'Votes',
+                'data' => $query->pluck('votes_count')->toArray(),
+                'backgroundColor' => ['#239D24', '#1D72AF', '#F0790E'],
             ],
-            'labels' => $query->pluck('name')->toArray(),
-        ];
-    }
+        ],
+        'labels' => $query->pluck('name')->toArray(),
+    ];
+}
 
 
     public static function canView(): bool
